@@ -1,0 +1,34 @@
+<form [formGroup]="workoutForm" (ngSubmit)="onSubmit()" class="space-y-4 p-4 max-w-md mx-auto bg-white shadow-lg rounded-lg">
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>User Name</mat-label>
+    <input matInput formControlName="userName" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"/>
+    <mat-error *ngIf="workoutForm.get('userName')?.invalid && (workoutForm.get('userName')?.dirty || workoutForm.get('userName')?.touched)"
+               class="text-red-600 text-sm">
+      User name is required.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Workout Type</mat-label>
+    <mat-select formControlName="workoutType">
+      <mat-option *ngFor="let type of workoutTypes" [value]="type">{{ type }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="workoutForm.get('workoutType')?.invalid && (workoutForm.get('workoutType')?.dirty || workoutForm.get('workoutType')?.touched)"
+               class="text-red-600 text-sm">
+      Workout type is required.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Workout Minutes</mat-label>
+    <input matInput type="number" formControlName="workoutMinutes" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"/>
+    <mat-error *ngIf="workoutForm.get('workoutMinutes')?.invalid && (workoutForm.get('workoutMinutes')?.dirty || workoutForm.get('workoutMinutes')?.touched)"
+               class="text-red-600 text-sm">
+      Workout minutes must be a positive number.
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" class="w-full bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md py-2">
+    Add Workout
+  </button>
+</form>
