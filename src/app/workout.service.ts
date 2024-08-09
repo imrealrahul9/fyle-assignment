@@ -1,18 +1,22 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 import { Workout } from './workout.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkoutService {
-  private workoutsSubject = new BehaviorSubject<Workout[]>(this.loadWorkoutsFromSessionStorage());
-  workouts$ = this.workoutsSubject.asObservable();
+  private workoutsSubject = new BehaviorSubject<Workout[]>([]);
+  workouts$: Observable<Workout[]> = this.workoutsSubject.asObservable();
 
-  private workouts: Workout[] = this.loadWorkoutsFromSessionStorage();
+  private workouts: Workout[] = [];
 
-  constructor() {
-    this.workoutsSubject.next(this.workouts);
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.workouts = this.loadWorkoutsFromSessionStorage();
+      this.workoutsSubject.next(this.workouts);
+    }
   }
 
   addWorkout(workout: Workout): void {
@@ -32,15 +36,13 @@ export class WorkoutService {
       this.workouts.push(workout);
     }
 
-    // Save to session storage
-    this.saveWorkoutsToSessionStorage(this.workouts);
-
     // Notify subscribers about the update
     this.workoutsSubject.next(this.workouts);
-  }
 
-  getWorkouts() {
-    return this.workouts$;
+    // Save to sessionStorage
+    if (isPlatformBrowser(this.platformId)) {
+      this.saveWorkoutsToSessionStorage();
+    }
   }
 
   private loadWorkoutsFromSessionStorage(): Workout[] {
@@ -48,7 +50,11 @@ export class WorkoutService {
     return workouts ? JSON.parse(workouts) : [];
   }
 
-  private saveWorkoutsToSessionStorage(workouts: Workout[]): void {
-    sessionStorage.setItem('workouts', JSON.stringify(workouts));
+  private saveWorkoutsToSessionStorage(): void {
+    sessionStorage.setItem('workouts', JSON.stringify(this.workouts));
+  }
+
+  getWorkouts(): Observable<Workout[]> {
+    return this.workouts$;
   }
 }
