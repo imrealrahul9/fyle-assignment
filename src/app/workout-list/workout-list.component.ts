@@ -13,7 +13,7 @@ import { Workout } from '../workout.model';
   styleUrls: ['./workout-list.component.css']
 })
 export class WorkoutListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['userName', 'workoutType', 'workoutMinutes'];
+  displayedColumns: string[] = ['userName', 'workoutType', 'workoutTypeCount','workoutMinutes'];
   dataSource: MatTableDataSource<Workout> = new MatTableDataSource<Workout>();
   searchControl: FormControl = new FormControl();
   workoutTypeFilter: FormControl = new FormControl();
