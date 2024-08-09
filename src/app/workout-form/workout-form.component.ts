@@ -15,7 +15,7 @@ export class WorkoutFormComponent {
   constructor(private fb: FormBuilder, private workoutService: WorkoutService) {
     this.workoutForm = this.fb.group({
       userName: ['', Validators.required],
-      workoutType: ['', Validators.required], // Changed to single value
+      workoutType: ['', Validators.required], 
       workoutMinutes: [, [Validators.required, Validators.min(1)]]
     });
   }
