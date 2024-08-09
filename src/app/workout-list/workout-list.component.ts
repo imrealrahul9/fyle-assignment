@@ -13,7 +13,7 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./workout-list.component.css']
 })
 export class WorkoutListComponent implements OnInit {
-  displayedColumns: string[] = ['userName', 'workoutType', 'workoutMinutes'];
+  displayedColumns: string[] = ['userName', 'workoutType','workoutTypeCount', 'workoutMinutes'];
   dataSource = new MatTableDataSource<Workout>([]);
   searchControl = new FormControl('');
   workoutTypeFilter = new FormControl('');

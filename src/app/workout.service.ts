@@ -20,30 +20,28 @@ export class WorkoutService {
   }
 
   addWorkout(workout: Workout): void {
-    // Find if the user already exists
     const existingWorkout = this.workouts.find(w => w.userName === workout.userName);
-    
+  
     if (existingWorkout) {
-      // Update the existing workout
       workout.workoutTypes.forEach(type => {
         if (!existingWorkout.workoutTypes.includes(type)) {
           existingWorkout.workoutTypes.push(type);
         }
       });
       existingWorkout.workoutMinutes += workout.workoutMinutes;
+      existingWorkout.workoutTypeCount = existingWorkout.workoutTypes.length;
     } else {
-      // Add new workout
+      workout.workoutTypeCount = workout.workoutTypes.length;
       this.workouts.push(workout);
     }
-
-    // Notify subscribers about the update
+  
     this.workoutsSubject.next(this.workouts);
-
-    // Save to sessionStorage
+  
     if (isPlatformBrowser(this.platformId)) {
       this.saveWorkoutsToSessionStorage();
     }
   }
+  
 
   private loadWorkoutsFromSessionStorage(): Workout[] {
     const workouts = sessionStorage.getItem('workouts');

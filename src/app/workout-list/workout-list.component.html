@@ -41,6 +41,17 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="workoutTypeCount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header 
+            class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider bg-gray-50">
+          Workout Type Count
+        </th>
+        <td mat-cell *matCellDef="let element" 
+            class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+          {{ element.workoutTypeCount }}
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="workoutMinutes">
         <th mat-header-cell *matHeaderCellDef mat-sort-header 
             class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider bg-gray-50">
