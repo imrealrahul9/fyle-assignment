@@ -38,7 +38,6 @@ export class WorkoutListComponent implements OnInit, AfterViewInit {
       this.applyFilter();
     });
   
-    // Custom filter predicate to handle both search and workout type filter
     this.dataSource.filterPredicate = (data: Workout, filter: string) => {
       const searchTerm = filter.split(' ')[0];
       const workoutType = filter.split(' ')[1];

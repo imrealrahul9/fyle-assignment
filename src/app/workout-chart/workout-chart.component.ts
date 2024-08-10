@@ -11,6 +11,7 @@ import { Workout } from '../workout.model';
 export class WorkoutChartComponent implements OnInit {
   public chart: any;
   public users: string[] = [];
+  selectedUser: string | null = null;
   private workouts: Workout[] = [];
 
   constructor(private workoutService: WorkoutService) {}
@@ -20,13 +21,13 @@ export class WorkoutChartComponent implements OnInit {
       this.workouts = workouts;
       this.users = [...new Set(workouts.map(workout => workout.userName))];
       if (this.users.length > 0) {
-        // Optionally, set the default user selection
         this.onUserSelect(this.users[0]);
       }
     });
   }
 
   onUserSelect(userName: string): void {
+    this.selectedUser = userName;
     const userWorkouts = this.workouts.filter(workout => workout.userName === userName);
 
     const workoutTypeCounts = userWorkouts.reduce((acc, workout) => {
