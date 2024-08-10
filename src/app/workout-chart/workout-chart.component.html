@@ -1,7 +1,7 @@
-<div class=" bg-gray-100 min-h-screen flex">
+<div class="bg-gray-100 min-h-screen flex">
   <!-- User List -->
-  <div class="w-1/4 bg-gray-200 ">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4 p-4 text-center">Select a User</h2>
+  <div class="w-1/4 bg-gray-200 p-4 overflow-y-auto">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Select a User</h2>
     <table class="w-full">
       <tbody>
         <tr *ngFor="let user of users">
@@ -17,9 +17,12 @@
     </table>
   </div>
 
-  <!-- Chart -->
-  <div *ngIf="selectedUser" class="w-2/3 bg-white p-4 border border-gray-200">
-    <h2 class="text-xl font-semibold text-gray-800 mb-4">Workout Details for {{ selectedUser }}</h2>
-    <canvas id="workoutChart" class="w-full h-64"></canvas>
+  <!-- Chart Container -->
+  <div class="flex-1 p-4 bg-white shadow-lg rounded-lg overflow-auto">
+    <div class="flex items-center justify-center h-full">
+      <div class="w-full max-w-screen-sm">
+        <canvas id="MyChart" class="w-full h-64"></canvas> <!-- Adjusted height for better fitting -->
+      </div>
+    </div>
   </div>
 </div>
