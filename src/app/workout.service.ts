@@ -26,12 +26,21 @@ export class WorkoutService {
       workout.workoutTypes.forEach(type => {
         if (!existingWorkout.workoutTypes.includes(type)) {
           existingWorkout.workoutTypes.push(type);
+          existingWorkout.workoutDurations[type] = [];
         }
+        if (!existingWorkout.workoutDurations[type]) {
+          existingWorkout.workoutDurations[type] = [];
+        }
+        existingWorkout.workoutDurations[type].push(workout.workoutMinutes);
       });
       existingWorkout.workoutMinutes += workout.workoutMinutes;
       existingWorkout.workoutTypeCount = existingWorkout.workoutTypes.length;
     } else {
       workout.workoutTypeCount = workout.workoutTypes.length;
+      workout.workoutDurations = workout.workoutTypes.reduce((acc, type) => {
+        acc[type] = [workout.workoutMinutes];
+        return acc;
+      }, {} as { [key: string]: number[] });
       this.workouts.push(workout);
     }
   
@@ -41,7 +50,6 @@ export class WorkoutService {
       this.saveWorkoutsToSessionStorage();
     }
   }
-  
 
   private loadWorkoutsFromSessionStorage(): Workout[] {
     const workouts = sessionStorage.getItem('workouts');

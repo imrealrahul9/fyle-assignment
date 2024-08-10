@@ -26,7 +26,10 @@ export class WorkoutFormComponent {
       const workout: Workout = {
         userName: formValues.userName,
         workoutTypes: [formValues.workoutType], 
-        workoutMinutes: formValues.workoutMinutes
+        workoutMinutes: formValues.workoutMinutes,
+        workoutDurations: {
+          [formValues.workoutType]: [formValues.workoutMinutes]
+        }
       };
       this.workoutService.addWorkout(workout);
       this.workoutForm.reset();

@@ -30,17 +30,22 @@ export class WorkoutChartComponent implements OnInit {
     const userWorkouts = this.workouts.filter(workout => workout.userName === userName);
 
     const workoutTypeCounts = userWorkouts.reduce((acc, workout) => {
-      workout.workoutTypes.forEach(type => {
-        if (!acc[type]) {
-          acc[type] = 0;
+      for (const type in workout.workoutDurations) {
+        if (workout.workoutDurations.hasOwnProperty(type)) {
+          const value = workout.workoutDurations[type];
+          if (!acc[type]) {
+            acc[type] = 0;
+          }
+          acc[type] += value as unknown as number;
         }
-        acc[type] += workout.workoutMinutes/workout.workoutTypes.length;
-      });
+      }
       return acc;
     }, {} as { [key: string]: number });
 
     const labels = Object.keys(workoutTypeCounts);
     const data = Object.values(workoutTypeCounts);
+    // console.log(labels);
+    // console.log(data);
 
     if (this.chart) {
       this.chart.data.labels = labels;
